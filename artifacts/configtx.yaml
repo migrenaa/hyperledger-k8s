@@ -1,0 +1,52 @@
+Organizations:
+    - &orbixorg
+        Name: orbixorg
+        ID: orbixorgMSP
+        MSPDir: shared/orbixorg/msp
+
+        # MSPDir is the filesystem path which contains the MSP configuration
+        AdminPrincipal: Role.MEMBER
+        AnchorPeers:
+            - Host: blockchain-org1peer1
+              Port: 30110
+
+Application: &ApplicationDefaults
+    Organizations:
+
+################################################################################
+#
+#   Profile
+#
+#   - Different configuration profiles may be encoded here to be specified
+#   as parameters to the configtxgen tool
+#
+################################################################################
+Profiles:
+    OrgOrdererGenesis:
+        Orderer:
+            OrdererType: kafka
+            Addresses:
+                - blockchain-orderer:31010
+            BatchTimeout: 2s
+            BatchSize:
+                MaxMessageCount: 10
+                AbsoluteMaxBytes: 99 MB
+                PreferredMaxBytes: 512 KB
+            Kafka:
+                Brokers:
+                    - kafka0:9092
+                    - kafka1:9092
+                    - kafka2:9092
+                    - kafka3:9092
+            Organizations:
+                - *orbixorg
+        Consortiums:
+            orbixConsortium:
+                Organizations:
+                    - *orbixorg
+    OrgChannel:
+        Consortium: orbixConsortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *orbixorg

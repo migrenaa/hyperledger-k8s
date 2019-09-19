@@ -1,0 +1,72 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: utils
+spec:
+  backoffLimit: 1
+  template:
+    metadata:
+      name: utils
+    spec:
+      restartPolicy: "Never"
+      volumes:
+      - name: sharedvolume
+        persistentVolumeClaim:
+          claimName: shared-pvc
+      - name: dockersocket
+        hostPath:
+          path: /var/run/docker.sock
+      containers:
+      - name: generate-certs
+        image: hyperledger/fabric-ca-tools:1.2.1
+        imagePullPolicy: Always
+        command: ["bash", "-c", "echo 'Generate Certs Starts'; ls -l /shared/artifacts; while [ ! -d /shared/artifacts ]; do echo Waiting for configFiles; sleep 1; done; chmod +x ./shared/artifacts/setup-certificates.sh; ./shared/artifacts/setup-certificates.sh"]
+        volumeMounts:
+        - mountPath: /shared
+          name: sharedvolume
+        env:
+        - name: PEER_NAME
+          value: "org1peer1"
+        - name: PEER_PASS
+          value: "org1peer1"
+        - name: USER_NAME
+          value: "user"
+        - name: USER_PASS
+          value: "userpw"
+        - name: ORDERER_NAME
+          value: "orderer1" 
+        - name: ORDERER_PASS
+          value: "orderer1"
+        - name: ADMIN_NAME
+          value: "admin-orbixorg"
+        - name: ADMIN_PASS
+          value: "admin"
+        - name: CA_ADMIN_NAME
+          value: "intermediate-ca-orbixorg-admin"
+        - name: CA_NAME
+          value: "intermediate-ca-orbixorg"
+        - name: CA_ADMIN_PASS
+          value: "intermediate"
+        - name: CA_HOST
+          value: "blockchain-intermediate-ca:30055"
+        - name: ORG_MSP_DIR
+          value: "/shared/orbixorg/msp"
+        - name: ORG_ADMIN_HOME
+          value: "/shared/orbixorg/admin"
+        - name: FABRIC_CA_CLIENT_HOME
+          value: "/shared/orbixorg/msp"
+        - name: ORG_ADMIN_CERT
+          value: "/shared/orbixorg/msp/admincerts/cert.pem"
+        - name: GENESIS_BLOCK_FILE
+          value: "/shared/artifacts/genesis.block"
+        - name: CONFIG_TX_FILE
+          value: "/shared/artifacts/configtx.yaml"
+        - name: CHANNEL_TX_FILE
+          value: "/shared/artifacts/channel.tx"
+        - name: CHANNEL_NAME
+          value: "orbixchannel"
+        - name: ANCHOR_TX_FILE
+          value: "/shared/artifacts/anchors.tx"
+        - name: ORG
+          value: "orbixorg"

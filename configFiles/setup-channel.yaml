@@ -1,0 +1,65 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: createchannel
+spec:
+  backoffLimit: 1
+  template:
+    metadata:
+      name: createchannel
+    spec:
+      restartPolicy: "Never"
+      volumes:
+      - name: sharedvolume
+        persistentVolumeClaim:
+          claimName: shared-pvc
+      containers:
+      - name: createchannel
+        image: hyperledger/fabric-ca-tools:1.2.1
+        imagePullPolicy: Always
+        command: ["bash", "-c", "chmod +x ./shared/artifacts/setup-channel.sh; ./shared/artifacts/setup-channel.sh"]
+        env:
+        - name: CHANNEL_NAME
+          value: orbixchannel
+        - name: ORDERER_URL
+          value: blockchain-orderer:31010
+        - name: CORE_PEER_NETWORKID
+          value: nid1
+        - name: CORE_PEER_LOCALMSPID
+          value: orbixorgMSP
+        - name: CORE_PEER_MSPCONFIGPATH
+          value: /shared/orbixorg/admin/msp
+        - name: CORE_LOGGING_LEVEL
+          value: debug
+        - name: CORE_PEER_ADDRESSAUTODETECT
+          value: "false"
+        - name: FABRIC_CFG_PATH
+          value: /etc/hyperledger/fabric
+        - name: GODEBUG
+          value: "netdns=go"
+        - name: CORE_PEER_ADDRESS
+          value: blockchain-org1peer1:30110
+        - name: ADMIN_NAME
+          value: "admin-orbixorg"
+        - name: ADMIN_PASS
+          value: "admin"
+        - name: ORG_ADMIN_CERT
+          value: "/shared/orbixorg/msp/admincerts/cert.pem"
+        - name: CA_HOST
+          value: "blockchain-intermediate-ca:30055"
+        - name: CHANNEL_TX_FILE
+          value: "/shared/artifacts/channel.tx"
+        - name: ANCHOR_TX_FILE
+          value: "/shared/artifacts/anchors.tx"
+        - name: CHAINCODE_NAME
+          value: "orbix-cc"
+        - name: CHANICODE_INSTANTIATION_ARGS
+          value: "{\"Args\": [\"\"]}"
+        - name: CHAINCODE_VERSION
+          value: "1.0"
+        - name: CHAINCODE_FOLDER
+          value: /shared/artifacts/chaincode
+        volumeMounts:
+        - mountPath: /shared
+          name: sharedvolume
