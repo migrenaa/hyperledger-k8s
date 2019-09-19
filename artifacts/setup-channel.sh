@@ -1,7 +1,7 @@
 
 # !/bin/bash
 
-export POLICY="OR('orbixorgMSP.member')"
+export POLICY="OR('testorgMSP.member')"
 
 # Enroll as a peer admin and create the channel
 function createChannel {
@@ -71,5 +71,5 @@ instantiateChaincodes
 sleep 10
 
 # TEST
-peer chaincode invoke -C $CHANNEL_NAME -n orbix-cc -c '{"Args":["storeRestorationCode","12123123132","asdasd"]}' -o blockchain-orderer:31010
+peer chaincode invoke -C $CHANNEL_NAME -n test-cc -c '{"Args":["storeRestorationCode","12123123132","asdasd"]}' -o blockchain-orderer:31010
 sleep 10

@@ -21,15 +21,15 @@ spec:
         command: ["bash", "-c", "chmod +x ./shared/artifacts/setup-channel.sh; ./shared/artifacts/setup-channel.sh"]
         env:
         - name: CHANNEL_NAME
-          value: orbixchannel
+          value: testchannel
         - name: ORDERER_URL
           value: blockchain-orderer:31010
         - name: CORE_PEER_NETWORKID
           value: nid1
         - name: CORE_PEER_LOCALMSPID
-          value: orbixorgMSP
+          value: testorgMSP
         - name: CORE_PEER_MSPCONFIGPATH
-          value: /shared/orbixorg/admin/msp
+          value: /shared/testorg/admin/msp
         - name: CORE_LOGGING_LEVEL
           value: debug
         - name: CORE_PEER_ADDRESSAUTODETECT
@@ -41,11 +41,11 @@ spec:
         - name: CORE_PEER_ADDRESS
           value: blockchain-org1peer1:30110
         - name: ADMIN_NAME
-          value: "admin-orbixorg"
+          value: "admin-testorg"
         - name: ADMIN_PASS
           value: "admin"
         - name: ORG_ADMIN_CERT
-          value: "/shared/orbixorg/msp/admincerts/cert.pem"
+          value: "/shared/testorg/msp/admincerts/cert.pem"
         - name: CA_HOST
           value: "blockchain-intermediate-ca:30055"
         - name: CHANNEL_TX_FILE
@@ -53,7 +53,7 @@ spec:
         - name: ANCHOR_TX_FILE
           value: "/shared/artifacts/anchors.tx"
         - name: CHAINCODE_NAME
-          value: "orbix-cc"
+          value: "test-cc"
         - name: CHANICODE_INSTANTIATION_ARGS
           value: "{\"Args\": [\"\"]}"
         - name: CHAINCODE_VERSION

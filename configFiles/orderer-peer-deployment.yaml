@@ -37,7 +37,7 @@ spec:
         - name: ORDERER_GENERAL_LOCALMSPDIR
           value: /etc/hyperledger/orderer/msp
         - name: ORDERER_GENERAL_LOCALMSPID
-          value: orbixorgMSP
+          value: testorgMSP
         - name: ORDERER_GENERAL_GENESISMETHOD
           value: file
         - name: ORDERER_GENERAL_GENESISFILE
@@ -59,7 +59,7 @@ spec:
         - name: CONFIGTX_ORDERER_BATCHTIMEOUT
           value: "2s"
         - name: ORG_ADMIN_CERT
-          value: /shared/orbixorg/msp/admincerts/cert.pem
+          value: /shared/testorg/msp/admincerts/cert.pem
         volumeMounts:
         - mountPath: /shared
           name: sharedvolume
@@ -116,9 +116,9 @@ spec:
         - name: CORE_VM_ENDPOINT
           value: unix:///host/var/run/docker.sock
         - name: CORE_PEER_LOCALMSPID
-          value: orbixorgMSP
+          value: testorgMSP
         - name: CORE_PEER_MSPCONFIGPATH
-          value: /shared/orbixorg/peers/blockchain-org1peer1/msp/
+          value: /shared/testorg/peers/blockchain-org1peer1/msp/
         - name: CORE_LOGGING_LEVEL
           value: debug
         - name: CORE_LOGGING_PEER
@@ -150,7 +150,7 @@ spec:
         - name: ENROLLMENT_URL
           value: http://org1peer1:org1peer1@blockchain-intermediate-ca:30055
         - name: ORG_ADMIN_CERT
-          value: /shared/orbixorg/msp/admincerts/cert.pem
+          value: /shared/testorg/msp/admincerts/cert.pem
         volumeMounts:
         - mountPath: /shared
           name: sharedvolume

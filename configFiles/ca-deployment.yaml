@@ -29,17 +29,17 @@ spec:
         - name: FABRIC_CA_SERVER_TLS_ENABLED
           value: "false"
         - name: BOOTSTRAP_USER_PASS
-          value: root-ca-orbixorg-admin:admin
+          value: root-ca-testorg-admin:admin
         - name: TARGET_CERTFILE
-          value: /shared/orbixorg-ca-cert.pem
+          value: /shared/testorg-ca-cert.pem
         - name: FABRIC_ORGS
-          value: orbixorg
+          value: testorg
         - name: GODEBUG
           value: "netdns=go"
         - name: FABRIC_CA_SERVER_CSR_CN
-          value: "root-ca-orbixorg"
+          value: "root-ca-testorg"
         - name: FABRIC_CA_SERVER_CSR_HOSTS
-          value: "root-ca-orbixorg"
+          value: "root-ca-testorg"
         volumeMounts:
         - mountPath: /shared
           name: sharedvolume
@@ -67,7 +67,7 @@ spec:
         command: ["bash", "-c", "sleep 10; chmod +x ./shared/artifacts/intermediate-ca-startup.sh; ./shared/artifacts/intermediate-ca-startup.sh; rm /shared/root-started;  sleep 20;"]
         env:
         - name: FABRIC_CA_SERVER_CA_NAME
-          value: "intermediate-ca-orbixorg"
+          value: "intermediate-ca-testorg"
         - name: FABRIC_CA_SERVER_DEBUG
           value: "true"
         - name: FABRIC_CA_SERVER_TLS_ENABLED
@@ -75,19 +75,19 @@ spec:
         - name: FABRIC_CA_SERVER_HOME
           value: /etc/hyperledger/fabric-ca
         - name: BOOTSTRAP_USER_PASS
-          value: intermediate-ca-orbixorg-admin:intermediate
+          value: intermediate-ca-testorg-admin:intermediate
         - name: TARGET_CERTFILE
-          value: /shared/orbixorg-ca-cert.pem
+          value: /shared/testorg-ca-cert.pem
         - name: TARGET_CHAINFILE
-          value: /shared/orbixorg-ca-chain.pem
+          value: /shared/testorg-ca-chain.pem
         - name: FABRIC_ORGS
-          value: orbixorg
+          value: testorg
         - name: PARENT_URL
-          value: http://root-ca-orbixorg-admin:admin@blockchain-root-ca:30056
+          value: http://root-ca-testorg-admin:admin@blockchain-root-ca:30056
         - name: GODEBUG
           value: "netdns=go"
         - name: FABRIC_CA_SERVER_CSR_HOSTS
-          value: "intermediate-ca-orbixorg"
+          value: "intermediate-ca-testorg"
         volumeMounts:
         - mountPath: /shared
           name: sharedvolume

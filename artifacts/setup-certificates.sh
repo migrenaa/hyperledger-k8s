@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # TODO move in yaml file
-export ROOT_CA_CERTFILE=/shared/orbixorg-ca-cert.pem
-export INT_CA_CHAINFILE=/shared/orbixorg-ca-chain.pem
-export ORG_MSP_ID=orbixorgMSP
-export ORG_MSP_DIR=/shared/orbixorg/msp
-export ORG_ADMIN_CERT=/shared/orbixorg/msp/admincerts/cert.pem
-export ORG_ADMIN_HOME=/shared/orbixorg/admin
-export CA_NAME=intermediate-ca-orbixorg
+export ROOT_CA_CERTFILE=/shared/testorg-ca-cert.pem
+export INT_CA_CHAINFILE=/shared/testorg-ca-chain.pem
+export ORG_MSP_ID=testorgMSP
+export ORG_MSP_DIR=/shared/testorg/msp
+export ORG_ADMIN_CERT=/shared/testorg/msp/admincerts/cert.pem
+export ORG_ADMIN_HOME=/shared/testorg/admin
+export CA_NAME=intermediate-ca-testorg
 
 function registerIdentities {
   echo "Enrolling CA Admin.." 
@@ -36,7 +36,7 @@ function registerPeerIdentities {
 
 function getCACerts {
   fabric-ca-client getcacert -d -u http://$CA_HOST -M ${ORG_MSP_DIR}
-  # Stored root CA certificate at /shared/orbixorg/msp/cacerts/blockchain-intermediate-ca-30055.pem
+  # Stored root CA certificate at /shared/testorg/msp/cacerts/blockchain-intermediate-ca-30055.pem
   switchToAdminIdentity
   echo "Get CA certs finished..."
 }
@@ -58,7 +58,7 @@ function switchToAdminIdentity {
     # If admincerts are required in the MSP, copy the cert there now and to my local MSP also
     mkdir -p $(dirname "${ORG_ADMIN_CERT}")
     # TODO move in env var
-    cp /shared/orbixorg/admin/msp/signcerts/* $ORG_ADMIN_CERT
+    cp /shared/testorg/admin/msp/signcerts/* $ORG_ADMIN_CERT
     # cp $ORG_ADMIN_HOME/msp/signcerts/* $ORG_ADMIN_CERT
     mkdir $ORG_ADMIN_HOME/msp/admincerts
     cp $ORG_ADMIN_HOME/msp/signcerts/* $ORG_ADMIN_HOME/msp/admincerts
@@ -78,8 +78,8 @@ function generateChannelArtifacts() {
   cp $CONFIG_TX_FILE /etc/hyperledger/fabric/configtx.yaml
   
   # The certificates are stored in the shared folder. configtxgen is looking for them in the etc/hyperledger/fabric msp folder.
-  mkdir -p /etc/hyperledger/fabric/shared/orbixorg/msp
-  cp /shared/orbixorg/msp/* /etc/hyperledger/fabric/shared/orbixorg/msp/ -r
+  mkdir -p /etc/hyperledger/fabric/shared/testorg/msp
+  cp /shared/testorg/msp/* /etc/hyperledger/fabric/shared/testorg/msp/ -r
 
   configtxgen -profile OrgOrdererGenesis -outputBlock $GENESIS_BLOCK_FILE 
   if [ "$?" -ne 0 ]; then

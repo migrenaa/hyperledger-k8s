@@ -1,8 +1,8 @@
 Organizations:
-    - &orbixorg
-        Name: orbixorg
-        ID: orbixorgMSP
-        MSPDir: shared/orbixorg/msp
+    - &testorg
+        Name: testorg
+        ID: testorgMSP
+        MSPDir: shared/testorg/msp
 
         # MSPDir is the filesystem path which contains the MSP configuration
         AdminPrincipal: Role.MEMBER
@@ -39,14 +39,14 @@ Profiles:
                     - kafka2:9092
                     - kafka3:9092
             Organizations:
-                - *orbixorg
+                - *testorg
         Consortiums:
-            orbixConsortium:
+            testConsortium:
                 Organizations:
-                    - *orbixorg
+                    - *testorg
     OrgChannel:
-        Consortium: orbixConsortium
+        Consortium: testConsortium
         Application:
             <<: *ApplicationDefaults
             Organizations:
-                - *orbixorg
+                - *testorg

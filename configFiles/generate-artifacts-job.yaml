@@ -39,25 +39,25 @@ spec:
         - name: ORDERER_PASS
           value: "orderer1"
         - name: ADMIN_NAME
-          value: "admin-orbixorg"
+          value: "admin-testorg"
         - name: ADMIN_PASS
           value: "admin"
         - name: CA_ADMIN_NAME
-          value: "intermediate-ca-orbixorg-admin"
+          value: "intermediate-ca-testorg-admin"
         - name: CA_NAME
-          value: "intermediate-ca-orbixorg"
+          value: "intermediate-ca-testorg"
         - name: CA_ADMIN_PASS
           value: "intermediate"
         - name: CA_HOST
           value: "blockchain-intermediate-ca:30055"
         - name: ORG_MSP_DIR
-          value: "/shared/orbixorg/msp"
+          value: "/shared/testorg/msp"
         - name: ORG_ADMIN_HOME
-          value: "/shared/orbixorg/admin"
+          value: "/shared/testorg/admin"
         - name: FABRIC_CA_CLIENT_HOME
-          value: "/shared/orbixorg/msp"
+          value: "/shared/testorg/msp"
         - name: ORG_ADMIN_CERT
-          value: "/shared/orbixorg/msp/admincerts/cert.pem"
+          value: "/shared/testorg/msp/admincerts/cert.pem"
         - name: GENESIS_BLOCK_FILE
           value: "/shared/artifacts/genesis.block"
         - name: CONFIG_TX_FILE
@@ -65,8 +65,8 @@ spec:
         - name: CHANNEL_TX_FILE
           value: "/shared/artifacts/channel.tx"
         - name: CHANNEL_NAME
-          value: "orbixchannel"
+          value: "testchannel"
         - name: ANCHOR_TX_FILE
           value: "/shared/artifacts/anchors.tx"
         - name: ORG
-          value: "orbixorg"
+          value: "testorg"
